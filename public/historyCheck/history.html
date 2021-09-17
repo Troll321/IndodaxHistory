@@ -105,22 +105,7 @@
         }
         const api = localStorage.getItem("WiobgjCHewwfQECNdfArEsdfWUsH");
         const secret = localStorage.getItem("NHCOiwQUIisumSWcwswHHss2YywdwSdyrfnh");
-        if (api && secret && validate(api) == false && validate(secret) == false) {
-            makeRequest(api, secret);
-        }
-        function makeRequest(api, secret) {
-            if (api && secret && validate(api) == false && validate(secret) == false){
-                const baseURL = "/login"; 
-                const x = new XMLHttpRequest();
-                x.open("POST", baseURL);
-                x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                x.send(`api=${api}&secret=${secret}`);
-            } else {
-                alert("Please insert credentials");
-            }
-        }
-    </script>
-    <script>
+
         function upper(string) {
             var arr = string.split("");
             arr[0] = arr[0].toUpperCase();
@@ -376,22 +361,26 @@
     }
 
     function historyCheck(pair, isLast) {
-        const baseURL = "/history"; 
-        const x = new XMLHttpRequest();
-        x.onload = function () {
-            const json = JSON.parse(this.responseText);
-            for (let l = 0; l < json.length; l++) {
-                HISTORYARRRAY.push(json[l]);
-                var x = document.getElementById("historyTemplate").content.cloneNode(true);
-                document.getElementById("history").appendChild(x);
+        const api = localStorage.getItem("WiobgjCHewwfQECNdfArEsdfWUsH");
+        const secret = localStorage.getItem("NHCOiwQUIisumSWcwswHHss2YywdwSdyrfnh");
+        if (api && secret) {
+            const baseURL = "/history"; 
+            const x = new XMLHttpRequest();
+            x.onload = function () {
+                const json = JSON.parse(this.responseText);
+                for (let l = 0; l < json.length; l++) {
+                    HISTORYARRRAY.push(json[l]);
+                    var x = document.getElementById("historyTemplate").content.cloneNode(true);
+                    document.getElementById("history").appendChild(x);
+                }
+                if (isLast == true) {
+                    historyProcess();
+                }
             }
-            if (isLast == true) {
-                historyProcess();
-            }
+            x.open("POST", baseURL);
+            x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            x.send(`method=tradeHistory&pair=${pair}&api=${api}&secret=${secret}`);
         }
-        x.open("POST", baseURL);
-        x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        x.send(`method=tradeHistory&pair=${pair}`);
     }
 
     function historyRefresh() {

@@ -44,8 +44,8 @@ async function postreq(obj, APIKey, secretKey) {
 }
 
 app.post("/login", (req,res)=>{
-    API = req.body.api;
-    Secret = req.body.secret;
+    // API = req.body.api;
+    // Secret = req.body.secret;
     res.sendStatus(200);
 })
 const validationRegex = /[\"\,\.\'\<\>\=\;\.\!\`\\\/\(\)\{\}\[\]]/i;
@@ -57,7 +57,7 @@ app.post("/api", (req, res)=>{
     }
 
     if (prohibited == false) {
-        postreq(req.body, API, Secret).then((data)=>{
+        postreq(obj, API, Secret).then((data)=>{
             var s = data.return;
             res.json(s);
             res.end();
@@ -73,7 +73,12 @@ app.post("/history", (req, res)=>{
     }
 
     if (prohibited == false) {
-        postreq(req.body, API, Secret).then((data)=>{
+        var obj =
+        {
+            method: req.body.method,
+            pair: req.body.pair
+        };
+        postreq(obj, req.body.api, req.body.secret).then((data)=>{
             var s = data.return.trades;
             res.json(s);
             res.end();
