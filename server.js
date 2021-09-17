@@ -11,7 +11,7 @@ app.use(express.static("./public"));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.get("/test", (req, res)=>{
-    res.sendFile(__dirname + "/public/PlayPlay/index.html", (err)=>{console.error(err);});
+    res.sendFile(__dirname + "/public/PlayPlay/index.html");
 });
 app.get("/", (req,res)=>{
     res.sendFile("/public/index.html")
@@ -43,11 +43,6 @@ async function postreq(obj, APIKey, secretKey) {
     return output;
 }
 
-app.post("/login", (req,res)=>{
-    // API = req.body.api;
-    // Secret = req.body.secret;
-    res.sendStatus(200);
-})
 const validationRegex = /[\"\,\.\'\<\>\=\;\.\!\`\\\/\(\)\{\}\[\]]/i;
 
 app.post("/api", (req, res)=>{
@@ -57,7 +52,10 @@ app.post("/api", (req, res)=>{
     }
 
     if (prohibited == false) {
-        postreq(obj, API, Secret).then((data)=>{
+        var api = req.body.api, secret = req.body.secret;
+        delete req.body.api;
+        delete req.body.secret;
+        postreq(req.body, api, secret).then((data)=>{
             var s = data.return;
             res.json(s);
             res.end();

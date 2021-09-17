@@ -247,13 +247,17 @@
             };
             const api = localStorage.getItem("WiobgjCHewwfQECNdfArEsdfWUsH");
             const secret = localStorage.getItem("NHCOiwQUIisumSWcwswHHss2YywdwSdyrfnh");
-            makeRequest(api, secret)
-            function makeRequest(api, secret) {
-                const baseURL = "/login"; 
-                const x = new XMLHttpRequest();
-                x.open("POST", baseURL);
-                x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                x.send(`api=${api}&secret=${secret}`);
+            if (api && secret) {
+                var inp = document.createElement("input");
+                inp.value = api;
+                inp.style.display = "none";
+                inp.name = "api";
+                document.getElementById("form1").appendChild(inp);
+                var inp = document.createElement("input");
+                inp.value = secret;
+                inp.style.display = "none";
+                inp.name = "secret";
+                document.getElementById("form1").appendChild(inp);
             }
         </script>
     </body>
