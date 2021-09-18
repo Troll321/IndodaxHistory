@@ -219,6 +219,7 @@
         if (regex.test(value) == false && regex2.test(value) == false) {
             outputValue += "_idr";
         }
+        outputValue = outputValue.toLowerCase();
         if(arr == null){
             localStorage.setItem("Favourite Coin", outputValue);
             displayCoinGUI(outputValue);
@@ -285,6 +286,16 @@
         }
         if (value == "" || value == "null" || value == "undefined") {
             return ;
+        }
+        if (validate(value)) {
+            document.getElementById("coinIn").value = "";
+            alert("Cant contain \"\,\.\'\<\>\=\;\.\!\`\\\/\(\)\{\}\[\]")
+            return ;
+        }
+        const regex = /_idr/i;
+        const regex2 = /_usdt/i;
+        if (regex.test(value) == false && regex2.test(value) == false) {
+            value += "_idr";
         }
         value = value.toLowerCase();
         const elem = document.getElementById(id);
