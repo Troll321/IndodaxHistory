@@ -185,7 +185,6 @@
             add();
         }
     })
-    var state = "normal";
 
     function viewMode() {
         const {style} = document.getElementById("history");
@@ -445,6 +444,7 @@
             var q = document.getElementsByClassName(ORDERARRAY[0]);
             const length = q.length;
             var g = q[length-1].innerText.split("\n");
+            console.log(g);
             var order = q[length-1].style.order,
             totalPrice = float(g[13]),
             idr = float(g[17]),
@@ -458,10 +458,10 @@
 
             for (let l = 0; l < length-1; l++) {
                 var arr = q[l].innerText.split("\n");
-                totalPrice += float(g[13]),
-                idr += float(g[17]),
-                curr_ += float(g[21]),
-                fee += float(g[25]),
+                totalPrice += float(arr[13]),
+                idr += float(arr[17]),
+                curr_ += float(arr[21]),
+                fee += float(arr[25]),
                 _outerHTML += q[l].outerHTML;
             }
             _outerHTML += q[length-1].outerHTML;
